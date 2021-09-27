@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/BaseNPC.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Images/Player/char_player_back.png" type="Texture" id=2]
+
+[node name="Karen" instance=ExtResource( 1 )]
+collision_layer = 5
+collision_mask = 4
+npc_name = "Laura"
+voice_path = "res://Dialogue/voices/voice_billy.ogg"
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 2 )

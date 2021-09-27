@@ -1,0 +1,8 @@
+[
+    {
+        "Type": "dialogue",
+        "Name": "Default",
+        "Emotion": "Happy",
+        "Text": "This is the default path to a dialogue"
+    }
+]
