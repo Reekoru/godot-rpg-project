@@ -9,7 +9,7 @@ enum {
 }
 
 var state : int = FREE
-var can_interact : bool = true
+var is_interacting : bool = false
 
 var motion = Vector2()
 var velocity = Vector2()
@@ -33,18 +33,17 @@ func _process(delta):
 			else:
 				$AnimationPlayer.play("Idle")
 				
-			if(Input.is_action_pressed("run")):
-				$AnimationPlayer.playback_speed = 1.5
-				speed = 128
-			else:
-				$AnimationPlayer.playback_speed = 1
-				speed = 64
-			velocity = motion.normalized() * speed
+			if(is_interacting):
+				change_state(INTERACT)
+			
+			velocity = motion.normalized() * speed * (int(Input.is_action_pressed("run")) + 1)
 			move_and_slide(velocity)
 		
 		INTERACT:
 			motion = Vector2.ZERO
 			$AnimationPlayer.play("Idle")
+			if(!is_interacting):
+				change_state(FREE)
 
 func change_state(target_state : int):
 	state = target_state
@@ -76,12 +75,5 @@ func _on_InteractableComponent_on_interactable_change(new_interactable):
 
 
 func _on_InteractableComponent_on_interact(interactable):
-	can_interact = false
-	change_state(INTERACT)
-
-func _on_DialogueNode_dialogue_finish():
-	change_state(FREE)
-	$InteractionTimer.start()
-	yield($InteractionTimer, "timeout")
-	print(inventory)
-	can_interact = true
+	pass
+	#change_state(INTERACT)

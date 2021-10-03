@@ -1,7 +1,7 @@
 [
     {
         "Type": "dialogue",
-        "Name": "",
+        "Name": "???",
         "Emotion": "Happy",
         "Text": "Hi!| I'm Billy!!!!| Nice to meet you!| Did you know that you can skip this text by pressing the [color=yellow]SPACE[/color] bar???"
     },
@@ -9,7 +9,14 @@
         "Type": "dialogue",
         "Name": "Billy",
         "Emotion": "Happy",
-        "Text": "Try it!| [rainbow freq=1 sat=10 val 20]It's so cool![/rainbow]"
+        "Text": "Try it!| [rainbow freq=1 sat=10 val 20]It's so cool![/rainbow]",
+        "Animation": "Happy Bounce"
+    },
+    {
+        "Type": "animation",
+        "Name": "Billy",
+        "Emotion": "Uncomfortable",
+        "Text": ""
     },
     {
         "Type": "dialogue",
