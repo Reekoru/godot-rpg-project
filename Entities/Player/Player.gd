@@ -1,7 +1,8 @@
 extends KinematicBody2D
 class_name Player
 
-export var speed = 64
+export var speed = 48
+export var sprint_percentage = 0.75
 
 enum {
 	FREE,
@@ -9,11 +10,11 @@ enum {
 }
 
 var state : int = FREE
-var is_interacting : bool = false
 
 var motion = Vector2()
 var velocity = Vector2()
 var inventory : Array = []
+var current_direction = Vector2()
 
 func _ready():
 	pass
@@ -21,28 +22,20 @@ func _ready():
 
 
 func _process(delta):
-	get_input_direction()
+	
 	match state:
 		FREE:
-			if(motion.x == 1):
-				$Sprite.set_flip_h(false)
-			elif(motion.x == -1):
-				$Sprite.set_flip_h(true)
-			if(motion != Vector2.ZERO):
-				$AnimationPlayer.play("Run")
-			else:
-				$AnimationPlayer.play("Idle")
-				
-			if(is_interacting):
+			get_input_direction()
+			if($InteractableComponent.is_interacting):
 				change_state(INTERACT)
 			
-			velocity = motion.normalized() * speed * (int(Input.is_action_pressed("run")) + 1)
+			velocity = motion.normalized() * speed * ((int(Input.is_action_pressed("run") ) * sprint_percentage) + 1)
 			move_and_slide(velocity)
 		
 		INTERACT:
 			motion = Vector2.ZERO
-			$AnimationPlayer.play("Idle")
-			if(!is_interacting):
+			play_idle_animation()
+			if(!$InteractableComponent.is_interacting):
 				change_state(FREE)
 
 func change_state(target_state : int):
@@ -54,18 +47,38 @@ func get_input_direction():
 	var key_up = Input.is_action_pressed("ui_up")
 	var key_down = Input.is_action_pressed("ui_down")
 	
-	if(key_right):
-		motion.x = 1
-	elif(key_left):
-		motion.x = -1
-	elif(!key_right || !key_left):
+	
+	if(key_right || key_left):
+		motion.x = -int(key_left) + int(key_right)
+		$Sprite.set_flip_h(is_number_negative(motion.x))
+		current_direction = Vector2(-int(key_left) + int(key_right), 0)
+	else:
 		motion.x = 0
 	
 	if(key_up || key_down):
+		$Sprite.set_flip_h(false)
 		motion.y = -int(key_up) + int(key_down) # Get horizontal motion
-	elif(!key_right || !key_left):
+		current_direction = Vector2(0, -int(key_up) + int(key_down))
+	else:
 		motion.y = 0
+	
+	if(motion == Vector2.ZERO): play_idle_animation(); play_walk_animation()
 
+func play_walk_animation():
+		if(current_direction == Vector2.LEFT || current_direction == Vector2.RIGHT):
+			$AnimationPlayer.play("Walk_Side")
+		elif(current_direction == Vector2.UP):
+			$AnimationPlayer.play("Walk_Back")
+		else:
+			$AnimationPlayer.play("Walk_Front")
+
+func play_idle_animation():
+	if(current_direction == Vector2.LEFT || current_direction == Vector2.RIGHT):
+		$AnimationPlayer.play("Idle_Side")
+	elif(current_direction == Vector2.UP):
+		$AnimationPlayer.play("Idle_Back")
+	else:
+		$AnimationPlayer.play("Idle_Front")
 
 func _on_InteractableComponent_on_interactable_change(new_interactable):
 	if(new_interactable != null):
@@ -73,7 +86,5 @@ func _on_InteractableComponent_on_interactable_change(new_interactable):
 	else:
 		change_state(FREE)
 
-
-func _on_InteractableComponent_on_interact(interactable):
-	pass
-	#change_state(INTERACT)
+func is_number_negative(num : int) -> bool:
+	if(num < 0): return true; return false

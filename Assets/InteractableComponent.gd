@@ -8,7 +8,7 @@ signal on_interact(interactable)
 
 var interaction_target : Node
 var is_interacting : bool = false
-# Called when the node enters the scene tree for the first time.
+
 func _ready():
 	pass
 
@@ -20,7 +20,7 @@ func _process(delta):
 			if(parent.motion.y == 1):
 				$CollisionShape2D.position = Vector2(0, 0)
 			elif(parent.motion.y == -1):
-				$CollisionShape2D.position = Vector2(0, -6)
+				$CollisionShape2D.position = Vector2(0, -10)
 		elif(parent.motion.x != 0 && parent.motion.y == 0):
 			if(parent.motion.x == 1):
 				$CollisionShape2D.position = Vector2(4, -2.5)
@@ -32,8 +32,6 @@ func _process(delta):
 			interaction_target.interact(self) # Call the interaction function of interactable component
 			is_interacting = true
 			emit_signal("on_interact", interaction_target)
-	
-	parent.is_interacting = is_interacting
 	
 
 func _on_InteractableComponent_body_entered(body):

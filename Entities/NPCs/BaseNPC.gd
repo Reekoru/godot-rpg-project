@@ -14,8 +14,8 @@ export(float) var pause_text_speed = 0.5
 func _ready():
 	pass # Replace with function body.
 
-func can_interact(interactionComponent : Node) -> bool:
-	return interactionComponent.get_parent() is Player
+func can_interact(interaction_component : Node) -> bool:
+	return interaction_component.get_parent() is Player
 
 func interact(interaction_component : Node) -> void:
 	var dialogue_scene = load("res://Assets/DialogueNode.tscn")
