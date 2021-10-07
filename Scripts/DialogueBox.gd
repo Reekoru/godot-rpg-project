@@ -7,7 +7,7 @@ export(Resource) var voice
 export(float) var text_speed = 0.02
 export(float) var pause_text_speed = 0.1
 
-signal dialogue_finish
+signal dialogue_finished
  
 var dialogue
 var dialogue_animation: String
@@ -76,13 +76,13 @@ func next_phrase() -> void:
 	if(direct_text.empty()):
 		if(phrase_num >= len(dialogue)):
 			queue_free()
-			emit_signal("dialogue_finish")
+			emit_signal("dialogue_finished")
 			print("Dialogue has finished")
 			return
 	else:
 		if(phrase_num >= 1):
 			queue_free()
-			emit_signal("dialogue_finish")
+			emit_signal("dialogue_finished")
 			print("Dialogue has finished")
 			return
 	

@@ -1,9 +1,10 @@
-[gd_scene load_steps=66 format=2]
+[gd_scene load_steps=67 format=2]
 
 [ext_resource path="res://Assets/Building2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Entities/Player/new_player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Assets/Building1.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Assets/DoorComponent.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Dialogue/Voices/voice_luci.ogg" type="AudioStream" id=8]
 [ext_resource path="res://Entities/NPCs/new_base_npc.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Assets/Tilesets/Outside_floor/Outside_Floor_Tileset/Outside_Floor_Tileset.png" type="Texture" id=17]
 
@@ -676,8 +677,11 @@ position = Vector2( -352, -32 )
 [node name="Building3" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 256, -32 )
 
+[node name="Luci" parent="YSort" instance=ExtResource( 13 )]
+position = Vector2( 16, -16 )
+npc_name = "Luci"
+dialogue_path = "res://Assets/Dialogue/dial_luci.json"
+voice = ExtResource( 8 )
+
 [node name="Player" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( -12, -8 )
-
-[node name="BaseNPC" parent="." instance=ExtResource( 13 )]
-position = Vector2( 16, -16 )

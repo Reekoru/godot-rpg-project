@@ -4,6 +4,7 @@ export var interactable_parent : NodePath
 
 onready var parent = get_parent()
 onready var collision_shape = $CollisionShape2D
+onready var interaction_timer = $InteractionTimer
 
 var current_direction = Vector2()
 var interaction_target : Node
@@ -29,8 +30,8 @@ func _process(delta):
 		
 	if(interaction_target != null && Input.is_action_just_pressed("ui_accept") && !is_interacting):
 		if(interaction_target.has_method("interact")):
-			interaction_target.interact(self) # Call the interaction function of interactable component
 			is_interacting = true
+			interaction_target.interact(self) # Call the interaction function of interactable component
 			emit_signal("on_interact", interaction_target)
 
 
@@ -42,3 +43,18 @@ func _on_InteractionComponent_area_entered(area):
 	if(!can_interact): # Cannot interact with object
 		interaction_target = null
 		return # Do not interact
+	
+	interaction_target = area
+	emit_signal("on_interactable_change", interaction_target)
+
+
+func _on_InteractionComponent_area_exited(area):
+	print("Exited Area")
+	if(area == interaction_target):
+		interaction_target = null
+		emit_signal("on_interactable_change", null)
+
+func _on_Interactable_interaction_finished(interactable):
+	interaction_timer.start()
+	yield(interaction_timer, "timeout")
+	is_interacting = false

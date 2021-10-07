@@ -9,6 +9,7 @@ length = 8.0
 
 [sub_resource type="Animation" id=2]
 resource_name = "Idle_Back"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -24,6 +25,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=3]
 resource_name = "Idle_Front"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -39,6 +41,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=4]
 resource_name = "Idle_Side"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
@@ -108,7 +111,7 @@ texture = ExtResource( 1 )
 centered = false
 hframes = 4
 vframes = 3
-frame = 8
+frame = 4
 script = ExtResource( 2 )
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
@@ -126,6 +129,9 @@ script = ExtResource( 3 )
 position = Vector2( 8, 8 )
 shape = SubResource( 1 )
 
+[node name="InteractionTimer" type="Timer" parent="InteractionComponent"]
+wait_time = 0.25
+
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 
@@ -139,3 +145,4 @@ anims/Walk_Front = SubResource( 6 )
 anims/Walk_Side = SubResource( 7 )
 
 [connection signal="area_entered" from="InteractionComponent" to="InteractionComponent" method="_on_InteractionComponent_area_entered"]
+[connection signal="area_exited" from="InteractionComponent" to="InteractionComponent" method="_on_InteractionComponent_area_exited"]
