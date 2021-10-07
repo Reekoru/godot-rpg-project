@@ -19,7 +19,10 @@ func can_interact(interaction_component : Node) -> bool:
 	return interaction_component.get_parent() is Player
 
 func interact(interaction_component : Node) -> void:
+	# Connect signal
 	connect("interaction_finished", interaction_component, "_on_Interactable_interaction_finished")
+	
+	# Instance Scene
 	var dialogue_scene = load("res://Assets/DialogueNode.tscn")
 	var dialogue_instance = dialogue_scene.instance()
 	
@@ -34,8 +37,15 @@ func interact(interaction_component : Node) -> void:
 	dialogue_instance.text_speed = text_speed
 	dialogue_instance.pause_text_speed = pause_text_speed
 	
+	# Add as a child
 	add_child(dialogue_instance)
 	
 	yield(dialogue_instance, "dialogue_finished")
 	
 	emit_signal("interaction_finished", self)
+	
+	# Disconnect signal
+	disconnect("interaction_finished", interaction_component, "_on_Interactable_interaction_finished")
+
+func _update_sprite(new_sprite):
+	print(new_sprite)

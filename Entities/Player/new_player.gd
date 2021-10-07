@@ -13,6 +13,7 @@ var current_direction = Vector2()
 var current_position = Vector2()
 var previous_position = Vector2()
 
+var inventory = []
 
 enum {
 	FREE,

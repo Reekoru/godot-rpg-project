@@ -1,5 +1,4 @@
 extends KinematicBody2D
-class_name Player
 
 export var speed = 48
 export var sprint_percentage = 0.75

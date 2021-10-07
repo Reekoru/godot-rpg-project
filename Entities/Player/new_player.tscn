@@ -130,7 +130,7 @@ position = Vector2( 8, 8 )
 shape = SubResource( 1 )
 
 [node name="InteractionTimer" type="Timer" parent="InteractionComponent"]
-wait_time = 0.25
+wait_time = 0.01
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true

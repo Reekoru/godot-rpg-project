@@ -33,6 +33,7 @@ func _process(delta):
 			is_interacting = true
 			interaction_target.interact(self) # Call the interaction function of interactable component
 			emit_signal("on_interact", interaction_target)
+	
 
 
 func _on_InteractionComponent_area_entered(area):
