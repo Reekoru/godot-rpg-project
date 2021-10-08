@@ -1,4 +1,4 @@
-extends Area2D
+extends Interactable
 class_name Chest
 
 var item : Node
@@ -6,12 +6,10 @@ var is_open : bool = false
 
 var dialogue_path = "res://Assets/Dialogue/dial_consumable.json"
 
-signal interaction_finished(interactable)
-
 func _ready():
-	for i in get_child_count():
-		if(get_child(i).get_class() == "Area2D"):
-			item = get_child(i)
+	for child in get_children():
+		if(child is Consumable):
+			item = child
 			break
 			
 func can_interact(interaction_component : Node) -> bool:
@@ -19,7 +17,7 @@ func can_interact(interaction_component : Node) -> bool:
 
 func interact(interaction_component : Node) -> void:
 	if(!is_open):
-		connect("interaction_finished", interaction_component, "_on_Interactable_interaction_finished")
+		connect_interaction_signal(interaction_component)
 		$Sprite.frame = 1
 		interaction_component.get_child(0).disabled = true
 		
@@ -35,7 +33,7 @@ func interact(interaction_component : Node) -> void:
 		yield(dialogue_instance, "dialogue_finished")
 		
 		
-		emit_signal("interaction_finished", self)
+		emit_interaction_signal()
 		
 		interaction_component.get_child(0).disabled = false
 		
@@ -43,4 +41,4 @@ func interact(interaction_component : Node) -> void:
 		is_open = true
 		
 		# Disconnect signal
-		disconnect("interaction_finished", interaction_component, "_on_Interactable_interaction_finished")
+		disconnect_interaction_signal(interaction_component)

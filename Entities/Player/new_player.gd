@@ -1,5 +1,5 @@
 extends Sprite
-class_name Player
+#class_name Player
 
 export(int) var walk_speed = 64
 export(int) var run_speed = 128
@@ -27,51 +27,10 @@ onready var animation_player = $AnimationPlayer
 onready var interaction_component = $InteractionComponent
 
 func _ready():
-	# Snap player to grid
-	position = position.snapped(Vector2(TILE_SIZE, TILE_SIZE))
-	previous_tile = position
-	target_tile = position
-	current_position = position
+	pass
 
 func _process(delta):
-	match state:
-		FREE:
-			if(Input.is_action_pressed("run")): 
-				speed = run_speed
-			else:
-				speed = walk_speed
-			
-			if(ray.is_colliding()):
-				position = previous_tile
-				target_tile = previous_tile
-			else:
-				position += speed * move_direction * delta
-			
-			if(position.distance_to(previous_tile) >= TILE_SIZE - speed * delta):
-				position = target_tile
-				
-			if(position == target_tile):
-				get_move_direction()
-				previous_tile = position
-				target_tile += move_direction * TILE_SIZE
-				
-			if(previous_position != current_position):
-				previous_position = current_position
-			current_position = position
-			
-			if(previous_position != current_position):
-				play_move_animation()
-			else:
-				play_idle_animation()
-				
-			if(interaction_component.is_interacting):
-				change_state(INTERACT)
-				
-		INTERACT:
-			move_direction = Vector2.ZERO
-			
-			if(!interaction_component.is_interacting):
-				change_state(FREE)
+	pass
 
 func get_move_direction():
 	var LEFT = Input.is_action_pressed("left")

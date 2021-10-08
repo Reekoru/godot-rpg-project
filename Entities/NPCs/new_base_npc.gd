@@ -1,5 +1,9 @@
-extends Area2D
+tool
+extends Interactable
 class_name NPC
+
+export(Texture) var sprite_texture setget _update_sprite_texture
+	
 
 export(String) var dialogue_path = ""
 export(String) var direct_name = ""
@@ -8,19 +12,16 @@ export(Resource) var voice
 export(float) var text_speed = 0.01
 export(float) var pause_text_speed = 0.5
 
-signal interaction_finished(interactable)
-
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$Sprite.texture = sprite_texture
 
 func can_interact(interaction_component : Node) -> bool:
-	return interaction_component.get_parent() is Player
+	return interaction_component is Player
 
 func interact(interaction_component : Node) -> void:
 	# Connect signal
-	connect("interaction_finished", interaction_component, "_on_Interactable_interaction_finished")
+	connect_interaction_signal(interaction_component)
 	
 	# Instance Scene
 	var dialogue_scene = load("res://Assets/DialogueNode.tscn")
@@ -42,10 +43,12 @@ func interact(interaction_component : Node) -> void:
 	
 	yield(dialogue_instance, "dialogue_finished")
 	
-	emit_signal("interaction_finished", self)
+	emit_interaction_signal()
 	
 	# Disconnect signal
-	disconnect("interaction_finished", interaction_component, "_on_Interactable_interaction_finished")
+	disconnect_interaction_signal(interaction_component)
 
-func _update_sprite(new_sprite):
-	print(new_sprite)
+func _update_sprite_texture(new_sprite):
+	sprite_texture = new_sprite
+	if(Engine.editor_hint):
+		$Sprite.texture = sprite_texture

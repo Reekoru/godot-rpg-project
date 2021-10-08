@@ -1,4 +1,4 @@
-extends Area2D
+extends Interactable
 
 
 export(String, FILE, "*.tscn,*.scn") var target_scene
@@ -7,10 +7,6 @@ export(String, FILE, "*.tscn,*.scn") var target_scene
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
-
-
-func can_interact(interaction_component : Node) -> bool:
-	return interaction_component.get_parent() is Player
 
 func interact(interaction_component) -> void:
 	FadeToBlackCavas.play_transition()

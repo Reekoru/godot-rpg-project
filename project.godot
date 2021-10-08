@@ -9,12 +9,12 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Area2D",
+"base": "Interactable",
 "class": "Chest",
 "language": "GDScript",
 "path": "res://Entities/Consumables/Chest.gd"
 }, {
-"base": "Area2D",
+"base": "Interactable",
 "class": "Consumable",
 "language": "GDScript",
 "path": "res://Entities/Consumables/BaseConsumable.gd"
@@ -25,19 +25,25 @@ _global_script_classes=[ {
 "path": "res://git_api.gdns"
 }, {
 "base": "Area2D",
+"class": "Interactable",
+"language": "GDScript",
+"path": "res://Entities/Consumables/Interactables.gd"
+}, {
+"base": "Interactable",
 "class": "NPC",
 "language": "GDScript",
 "path": "res://Entities/NPCs/new_base_npc.gd"
 }, {
-"base": "Sprite",
+"base": "Area2D",
 "class": "Player",
 "language": "GDScript",
-"path": "res://Entities/Player/new_player.gd"
+"path": "res://Entities/Player/InteractionComponent.gd"
 } ]
 _global_script_class_icons={
 "Chest": "",
 "Consumable": "res://Assets/Images/Others/sprite_cup.png",
 "GitAPI": "",
+"Interactable": "",
 "NPC": "",
 "Player": ""
 }
