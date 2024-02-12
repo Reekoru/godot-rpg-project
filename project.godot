@@ -19,6 +19,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Entities/Consumables/BaseConsumable.gd"
 }, {
+"base": "Interactable",
+"class": "Enemy",
+"language": "GDScript",
+"path": "res://Entities/NPCs/Enemies/Enemy.gd"
+}, {
 "base": "",
 "class": "GitAPI",
 "language": "NativeScript",
@@ -32,20 +37,21 @@ _global_script_classes=[ {
 "base": "Interactable",
 "class": "NPC",
 "language": "GDScript",
-"path": "res://Entities/NPCs/new_base_npc.gd"
+"path": "res://Entities/NPCs/NpcClass.gd"
 }, {
 "base": "Area2D",
 "class": "Player",
 "language": "GDScript",
-"path": "res://Entities/Player/InteractionComponent.gd"
+"path": "res://Entities/Player/Player.gd"
 } ]
 _global_script_class_icons={
 "Chest": "",
-"Consumable": "res://Assets/Images/Others/sprite_cup.png",
+"Consumable": "res://Assets/Sprites/Others/sprite_cup.png",
+"Enemy": "",
 "GitAPI": "",
 "Interactable": "",
 "NPC": "",
-"Player": ""
+"Player": "res://Assets/Sprites/Player/img_player.png"
 }
 
 [application]
@@ -57,7 +63,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Global="*res://Globals/global.gd"
-FadeToBlackCavas="*res://Assets/FadeToBlackCavas.tscn"
+Transition="*res://Assets/Transition.tscn"
 
 [display]
 
@@ -102,7 +108,7 @@ down={
 
 [layer_names]
 
-2d_physics/layer_1="Default"
+2d_physics/layer_1="Player"
 2d_physics/layer_2="Environment"
 2d_physics/layer_3="Interactable"
 2d_physics/layer_20="RoomSize"

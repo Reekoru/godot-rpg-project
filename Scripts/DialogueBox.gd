@@ -3,7 +3,7 @@ extends CanvasLayer
 export var dialogue_path = "res://Assets/Dialogue/dial_default.json"
 export(String) var direct_text = ""
 export(String) var direct_name = ""
-export(Resource) var voice
+export(String, FILE, "*.ogg, *.wav") var voice = "res://Assets/Dialogue/Voices/voice_default.ogg"
 export(float) var text_speed = 0.02
 export(float) var pause_text_speed = 0.1
 
@@ -27,6 +27,7 @@ onready var dialogue_name_box = $Dialogue/NameBox
 onready var dialogue_box = $Dialogue/DialogueBox
  
 func _ready():
+	var default_voice = "res://Assets/Dialogue/Voices/voice_default.ogg"
 	for child in get_parent().get_children():
 		if(child.name == "Sprite"):
 			animation_player = child.get_child(0)
@@ -36,7 +37,9 @@ func _ready():
 	dialogue = get_dialogue()
 	assert(dialogue, "dialogue not found")
 	next_phrase() # Get Phrase
-	voice_player.stream = voice
+	if(voice.empty()):
+		voice = default_voice
+	voice_player.stream = load(voice)
 	
 	
  

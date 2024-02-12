@@ -7,7 +7,6 @@ signal interaction_finished(interactable)
 func _ready():
 	pass # Replace with function body.
 
-
 func can_interact(interaction_component : Node) -> bool:
 	return interaction_component is Player
 	
@@ -18,10 +17,13 @@ func interact(interaction_component):
 	disconnect_interaction_signal(interaction_component)
 
 func connect_interaction_signal(target : Node):
+	print("Connected Signal")
 	connect("interaction_finished", target, "_on_Interactable_interaction_finished")
 
 func disconnect_interaction_signal(target : Node):
+	print("Disconnected Signal")
 	disconnect("interaction_finished", target, "on_Interactable_interaction_finished")
 
 func emit_interaction_signal():
+	print("Emitted Signal")
 	emit_signal("interaction_finished", self)
